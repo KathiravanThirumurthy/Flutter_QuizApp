@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:quizApp/quiz.dart';
+import 'package:quizApp/result.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,30 +13,40 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void _checkAnswer() {
+  void _checkAnswer(int score) {
+    _totalScore += score;
     setState(() {
       _questionIndex++;
     });
-    print(_questionIndex);
   }
 
   var _questionIndex = 0;
+  var _totalScore = 0;
   final _question = [
     {
       'questionText': 'How is your favorite Actor ?',
-      'answerText': ['Rajini', 'Vijay', 'Ajith', 'Kamal'],
+      'answerText': [
+        {'text': 'Rajini', 'score': 4},
+        {'text': 'Vijay', 'score': 3},
+        {'text': 'Ajith', 'score': 2},
+        {'text': 'Kamal', 'score': 1},
+      ],
     },
     {
       'questionText': 'Do you like Coding?',
-      'answerText': ['Yes', 'No', 'both'],
+      'answerText': [
+        {'text': 'Yes', 'score': 4},
+        {'text': 'No', 'score': 3},
+        {'text': 'both', 'score': 2},
+      ],
     },
     {
       'questionText': 'Do you like pets?',
-      'answerText': ['Yes', 'No', 'both'],
-    },
-    {
-      'questionText': 'What is your favorite color?',
-      'answerText': ['Blue', 'Black', 'Green', 'Ornage', 'purple'],
+      'answerText': [
+        {'text': 'Yes', 'score': 4},
+        {'text': 'No', 'score': 3},
+        {'text': 'both', 'score': 2},
+      ],
     },
   ];
   @override
@@ -47,9 +58,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: _questionIndex < _question.length
             ? Quiz(_question, _questionIndex, _checkAnswer)
-            : Center(
-                child: Text('you did it'),
-              ),
+            : Result(_totalScore),
       ),
     );
   }
